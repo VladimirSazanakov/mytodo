@@ -4,6 +4,7 @@ import './app.css';
 
 import Header from '../header/';
 import TaskList from '../task-list';
+import Footer from '../footer/';
 
 function App() {
   return (
@@ -11,9 +12,8 @@ function App() {
       <Header/>
       <section className='main'>
         <TaskList/>
-
+        <Footer/>
       </section>
-      <p>Hello React</p>
     </div>
   );
 }
