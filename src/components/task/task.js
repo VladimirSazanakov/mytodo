@@ -1,18 +1,21 @@
-import React from "react";
+import React, {Component} from "react";
 
-const Task = ({label, createdData}) =>{
+export default class Task extends Component {
 
-  return (
-<div className="view">
-  <input className="toggle" type="checkbox"/>
-  <label>
-    <span className="description">{label}</span>
-    <span className="created">{createdData}created 17 seconds ago</span>
-  </label>
-  <button className="icon icon-edit"></button>
-  <button className="icon icon-destroy"></button>
-</div>
-  );
+  render() {
+    
+    const { label, createdDate } = this.props;
+    
+      return (
+      <div className="view">
+        <input className="toggle" type="checkbox" />
+        <label>
+          <span className="description">{label}</span>
+          <span className="created">{createdDate}created 17 seconds ago</span>
+        </label>
+        <button className="icon icon-edit"></button>
+        <button className="icon icon-destroy"></button>
+      </div>
+    );
+  };
 };
-
-export default Task;

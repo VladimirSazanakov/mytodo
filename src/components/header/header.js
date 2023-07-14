@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
 import NewTaskForm from '../new-task-form';
 import './header.css';
 
-const Header = () => {
+export default class Header extends Component {
+
+  render (){
   return (
     <header className="header">
       <h1>todos</h1>
@@ -11,5 +13,4 @@ const Header = () => {
     </header>
 );
 };
-
-export default Header;
+};
