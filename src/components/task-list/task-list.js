@@ -10,8 +10,8 @@ const TaskList = ({todo}) =>{
     const inputEdit = task.editing ? <input type="text" className="edit" value="Editing task"></input> : null;
     
     return (
-      <li className={liClassName}>
-        <Task label={task.label} createdData={task.createdData}/>
+      <li key={task.id} className={liClassName}>
+        <Task label={task.label} createdData={task.createdData} completed={task.completed} onChecked={()=>console.log('checked')}/>
         {inputEdit}
       </li>
     )

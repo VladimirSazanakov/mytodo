@@ -31,8 +31,12 @@ export default class App extends Component {
   }
 
   addNewTask = (label) =>{
-    const newTodoData = {...todoData, createNewTask(label)};
+    const newTodoData = [...this.state.todoData, this.createNewTask(label)];
     return newTodoData;
+  }
+
+  onCompleted = (id) =>{
+
   }
 
 
