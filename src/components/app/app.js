@@ -20,21 +20,26 @@ export default class App extends Component {
   }
 
   createNewTask = (label) => {
+    console.log(this.count);
+    this.count +=1;
+    console.log(this.count); 
     return {
       label,
       completed: false,
       editing: false,
       createdData: new Date,
-      id: this.count++,
+      id: this.count,
 
     }
   }
 
   addNewTask = (label) => {
     this.setState(({ todoData }) => {
+      console.log('created.new task', this.count);
       const newTask = this.createNewTask(label);
 
       const newArr = [...todoData, newTask];
+      console.log(this.state.todoData);
       return { todoData: newArr };
 
     })
