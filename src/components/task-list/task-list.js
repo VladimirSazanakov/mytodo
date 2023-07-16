@@ -1,21 +1,24 @@
-import React from "react";
+import React, {Component} from "react";
 import './task-list.css';
 
 import Task from '../task/';
 
-const TaskList = ({todo}) =>{
-
-  const elements = todo.map(task => {
-    const liClassName = task.completed ? 'completed' : task.editing ? 'editing' : '';
-    const inputEdit = task.editing ? <input type="text" className="edit" value="Editing task"></input> : null;
+export default class TaskList extends Component {
     
-    return (
-      <li key={task.id} className={liClassName}>
-        <Task label={task.label} createdData={task.createdData} completed={task.completed} onChecked={()=>console.log('checked')}/>
-        {inputEdit}
-      </li>
-    )
-  })
+  render (){
+    const {todo, onCompleted} = this.props;
+
+    const elements = todo.map(task => {
+      const liClassName = task.completed ? 'completed' : task.editing ? 'editing' : '';
+      const inputEdit = task.editing ? <input type="text" className="edit" value="Editing task"></input> : null;
+      
+      return (
+        <li key={task.id} className={liClassName}>
+          <Task label={task.label} createdData={task.createdData} completed={task.completed} onChecked={()=>onCompleted(task.id)}/>
+          {inputEdit}
+        </li>
+      )
+    });
 
   return (
     <ul className="todo-list">
@@ -23,5 +26,5 @@ const TaskList = ({todo}) =>{
     </ul>
   );
 };
+};
 
-export default TaskList;

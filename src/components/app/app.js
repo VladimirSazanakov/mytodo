@@ -31,11 +31,23 @@ export default class App extends Component {
   }
 
   addNewTask = (label) =>{
-    const newTodoData = [...this.state.todoData, this.createNewTask(label)];
-    return newTodoData;
+    this.setState(({todoData})=>{
+
+    })
+    
   }
 
   onCompleted = (id) =>{
+    console.log("Task Completed", id);
+
+    this.setState(({todoData})=>{
+      const idElement = todoData.findIndex(el => el.id==id);
+      //console.log(idElement);
+      const oldTask = todoData[idElement];
+      const NewTask = {...oldTask, completed: !oldTask['completed']};
+      const NewArr = [...todoData.slice(0, idElement), NewTask, ...todoData.slice(idElement+1)];
+      return {todoData: NewArr};
+    })
 
   }
 
@@ -53,7 +65,8 @@ export default class App extends Component {
       <div className="App">
         <Header />
         <section className='main'>
-          <TaskList todo={this.state.todoData} />
+          <TaskList todo={this.state.todoData}
+                    onCompleted={this.onCompleted} />
           <Footer />
         </section>
       </div>
