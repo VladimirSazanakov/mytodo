@@ -21,7 +21,7 @@ export default class Task extends Component {
           <span className="created">{createdDate}created 17 seconds ago</span>
         </label>
         <button className="icon icon-edit"></button>
-        <button className="icon icon-destroy"></button>
+        <button className="icon icon-destroy" onClick={this.props.onDeleteTask}></button>
       </div>
     );
   };

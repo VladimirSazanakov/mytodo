@@ -25,30 +25,42 @@ export default class App extends Component {
       completed: false,
       editing: false,
       createdData: new Date,
-      id: this.count ++,
+      id: this.count++,
 
     }
   }
 
-  addNewTask = (label) =>{
-    this.setState(({todoData})=>{
+  addNewTask = (label) => {
+    this.setState(({ todoData }) => {
+      const newTask = this.createNewTask(label);
+
+      const newArr = [...todoData, newTask];
+      return { todoData: newArr };
 
     })
-    
+
   }
 
-  onCompleted = (id) =>{
+  onCompleted = (id) => {
     console.log("Task Completed", id);
 
-    this.setState(({todoData})=>{
-      const idElement = todoData.findIndex(el => el.id==id);
+    this.setState(({ todoData }) => {
+      const idElement = todoData.findIndex(el => el.id == id);
       //console.log(idElement);
       const oldTask = todoData[idElement];
-      const NewTask = {...oldTask, completed: !oldTask['completed']};
-      const NewArr = [...todoData.slice(0, idElement), NewTask, ...todoData.slice(idElement+1)];
-      return {todoData: NewArr};
+      const NewTask = { ...oldTask, completed: !oldTask['completed'] };
+      const NewArr = [...todoData.slice(0, idElement), NewTask, ...todoData.slice(idElement + 1)];
+      return { todoData: NewArr };
     })
+  }
 
+  onDeleteTask = (id) => {
+    console.log('Task Must Be Deleted', id);
+    this.setState(({todoData})=>{
+      const idElement = todoData.findIndex(el=>el.id ==id);
+      const newArr = [...todoData.slice(0, idElement), ...todoData.slice(idElement+1)];
+      return {todoData: newArr}
+    })
   }
 
 
@@ -63,10 +75,11 @@ export default class App extends Component {
   */
     return (
       <div className="App">
-        <Header />
+        <Header addNewTask={this.addNewTask} />
         <section className='main'>
           <TaskList todo={this.state.todoData}
-                    onCompleted={this.onCompleted} />
+            onCompleted={this.onCompleted} 
+            onDeleteTask={this.onDeleteTask}/>
           <Footer />
         </section>
       </div>

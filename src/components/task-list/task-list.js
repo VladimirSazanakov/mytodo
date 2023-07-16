@@ -6,7 +6,7 @@ import Task from '../task/';
 export default class TaskList extends Component {
     
   render (){
-    const {todo, onCompleted} = this.props;
+    const {todo, onCompleted, onDeleteTask} = this.props;
 
     const elements = todo.map(task => {
       const liClassName = task.completed ? 'completed' : task.editing ? 'editing' : '';
@@ -14,7 +14,11 @@ export default class TaskList extends Component {
       
       return (
         <li key={task.id} className={liClassName}>
-          <Task label={task.label} createdData={task.createdData} completed={task.completed} onChecked={()=>onCompleted(task.id)}/>
+          <Task label={task.label} 
+                createdData={task.createdData} 
+                completed={task.completed} 
+                onChecked={()=>onCompleted(task.id)}
+                onDeleteTask={()=>onDeleteTask(task.id)}/>
           {inputEdit}
         </li>
       )
