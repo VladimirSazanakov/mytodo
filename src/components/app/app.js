@@ -17,6 +17,7 @@ export default class App extends Component {
       { label: 'Editing Tack', completed: false, editing: true, createdData: null, id: 2 },
       { label: 'Active Tack', completed: false, editing: false, createdData: null, id: 1 },
     ],
+    filter: 'All',
   }
 
   createNewTask = (label) => {
@@ -68,6 +69,21 @@ export default class App extends Component {
     })
   }
 
+  onClearCompleted = () => {
+    console.log('Need clear ol completed');
+    this.setState(({todoData})=>{
+      const newArr = todoData.filter(el=>!el.completed);
+      return {todoData: newArr}
+    })
+  };
+
+  onChangeFilter = (filterValue) => {
+    console.log(filterValue);
+    this.setState(({filter})=>{
+      return {filter: filterValue}
+    })
+  }
+
 
   render() {
 
@@ -78,14 +94,21 @@ export default class App extends Component {
       { label: 'Active Tack', completed: false, editing: false, createdData: null },
     ];
   */
+    const todoNeed = this.state.todoData
+                                .filter((el)=>!el.completed)
+                                .length;
     return (
       <div className="App">
         <Header addNewTask={this.addNewTask} />
         <section className='main'>
           <TaskList todo={this.state.todoData}
             onCompleted={this.onCompleted} 
-            onDeleteTask={this.onDeleteTask}/>
-          <Footer />
+            onDeleteTask={this.onDeleteTask}
+            filter={this.state.filter}/>
+          <Footer todoNeed={todoNeed}
+                  clearCompleted={this.onClearCompleted}
+                  onChangeFilter={this.onChangeFilter}
+                  filter={this.state.filter} />
         </section>
       </div>
     );
