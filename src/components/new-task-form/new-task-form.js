@@ -12,6 +12,7 @@ export default class NewTaskForm extends Component {
 
   onChangeInput = (event) => {
     //console.log(event.target.value);
+
     this.setState({
       label: event.target.value,
     })

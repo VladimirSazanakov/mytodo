@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import { formatDistanceToNow } from 'date-fns';
 
 export default class Task extends Component {
 
@@ -8,7 +9,8 @@ export default class Task extends Component {
 
   render() {
     
-    const { label, createdDate, completed } = this.props;
+    const { label, createdDate, completed, onDeleteTask, onEditBtn} = this.props;
+    const timeString = formatDistanceToNow((createdDate), {includeSeconds: true});
     
       return (
       <div className="view">
@@ -18,10 +20,10 @@ export default class Task extends Component {
                 checked={completed ? 'checked' : null} />
         <label>
           <span className="description">{label}</span>
-          <span className="created">{createdDate}created 17 seconds ago</span>
+          <span className="created">created {timeString} ago</span>
         </label>
-        <button className="icon icon-edit"></button>
-        <button className="icon icon-destroy" onClick={this.props.onDeleteTask}></button>
+        <button className="icon icon-edit" onClick={onEditBtn}></button>
+        <button className="icon icon-destroy" onClick={onDeleteTask}></button>
       </div>
     );
   };
