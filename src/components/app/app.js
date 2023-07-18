@@ -89,7 +89,7 @@ export default class App extends Component {
   onEditBtn = (id) => {
     console.log('button edi push ', id);
     this.setState(({ todoData }) => {
-      const idElement = todoData.findIndex(el => el.id == id);
+      const idElement = todoData.findIndex(el => el.id === id);
       const newTask = {...todoData[idElement], editing: true};
       const newArr = [...todoData.slice(0, idElement), newTask, ...todoData.slice(idElement+1)];
       return {todoData: newArr};
@@ -99,9 +99,11 @@ export default class App extends Component {
   onEditSubmit = (id, value) => {
     console.log('Edit Submit',id, value);
     this.setState(({todoData})=>{
-      const idElement= todoData.findIndex(el=>el.id==id);
-      const newTask = {...todoData[idElement], value: value, editing: false};
-      const newArr = [...todoData.slice(0, idElement), newTask, ...todoData.slice(idElement+1)]
+      const idElement= todoData.findIndex(el=>el.id===id);
+      const newTask = {...todoData[idElement], label: value, editing: false};
+      console.log(newTask);
+      const newArr = [...todoData.slice(0, idElement), newTask, ...todoData.slice(idElement+1)];
+      console.log(newArr);
       return {todoData: newArr};
     })
   }
