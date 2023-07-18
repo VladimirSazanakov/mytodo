@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import { formatDistanceToNow } from 'date-fns';
+import './task.css';
 
 export default class Task extends Component {
 
