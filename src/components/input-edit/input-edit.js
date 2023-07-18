@@ -10,20 +10,14 @@ export default class InputEdit extends Component {
 
   onSubmitEdit = (event) => {
     event.preventDefault();
-    //console.log(event.target);
-    //console.log('Edit Task', event.target.editInput.value);
-    //console.log(event.target.editInput);
-    console.log(this.state);
     this.props.onEditSubmit(this.state.id, this.state.label)
   };
 
   onChangeEditing = (event) => {
     this.setState({label: event.target.value})
-
   }
 
  render (){
-
     return (
       <form onSubmit={this.onSubmitEdit}>
         <input type="text"

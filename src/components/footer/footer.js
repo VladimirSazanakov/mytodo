@@ -8,7 +8,6 @@ export default class Footer extends Component {
   render(){
     
     const {onChangeFilter, filter} = this.props;
-    //console.log(onChangeFilter);
 
     return (
       <footer className="footer">

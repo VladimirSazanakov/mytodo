@@ -3,10 +3,6 @@ import { formatDistanceToNow } from 'date-fns';
 
 export default class Task extends Component {
 
-  onCompleted = () =>{
-
-  }
-
   render() {
     
     const { label, createdDate, completed, onDeleteTask, onEditBtn} = this.props;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ReactDom from 'react-dom';
-//import { formatDistanceToNow } from 'date-fns';
+//import ReactDom from 'react-dom';
+
 import './app.css';
 
 import Header from '../header/';
@@ -12,49 +12,33 @@ export default class App extends Component {
   count = 10;
 
   state = {
-    todoData: [
-      //{ label: 'Completed Tack', completed: true, editing: false, createdDate: null, id: 3 },
-      //{ label: 'Editing Tack', completed: false, editing: true, createdDate: null, id: 2 },
-      //{ label: 'Active Tack', completed: false, editing: false, createdDate: null, id: 1 },
-    ],
+    todoData: [],
     filter: 'All',
   }
 
   createNewTask = (label) => {
-    console.log(this.count);
     this.count += 1;
     const currentDate = new Date();
-    console.log (currentDate);
-    console.log(this.count);
     return {
       label,
       completed: false,
       editing: false,
       createdDate: currentDate,
       id: this.count,
-
     }
   }
 
   addNewTask = (label) => {
     this.setState(({ todoData }) => {
-      console.log('created.new task', this.count);
       const newTask = this.createNewTask(label);
-
       const newArr = [...todoData, newTask];
-      console.log(this.state.todoData);
       return { todoData: newArr };
-
     })
-
   }
 
   onCompleted = (id) => {
-    console.log("Task Completed", id);
-
     this.setState(({ todoData }) => {
-      const idElement = todoData.findIndex(el => el.id == id);
-      //console.log(idElement);
+      const idElement = todoData.findIndex(el => el.id === id);
       const oldTask = todoData[idElement];
       const NewTask = { ...oldTask, completed: !oldTask['completed'] };
       const NewArr = [...todoData.slice(0, idElement), NewTask, ...todoData.slice(idElement + 1)];
@@ -63,9 +47,8 @@ export default class App extends Component {
   }
 
   onDeleteTask = (id) => {
-    console.log('Task Must Be Deleted', id);
     this.setState(({ todoData }) => {
-      const idElement = todoData.findIndex(el => el.id == id);
+      const idElement = todoData.findIndex(el => el.id === id);
       const newArr = [...todoData.slice(0, idElement), ...todoData.slice(idElement + 1)];
       return { todoData: newArr }
     })
@@ -80,14 +63,12 @@ export default class App extends Component {
   };
 
   onChangeFilter = (filterValue) => {
-    console.log(filterValue);
-    this.setState(({ filter }) => {
+    this.setState(() => {
       return { filter: filterValue }
     })
   }
 
   onEditBtn = (id) => {
-    console.log('button edi push ', id);
     this.setState(({ todoData }) => {
       const idElement = todoData.findIndex(el => el.id === id);
       const newTask = {...todoData[idElement], editing: true};
@@ -97,30 +78,20 @@ export default class App extends Component {
   }
 
   onEditSubmit = (id, value) => {
-    console.log('Edit Submit',id, value);
     this.setState(({todoData})=>{
-      const idElement= todoData.findIndex(el=>el.id===id);
+      const idElement= todoData.findIndex(el=>el.id === id);
       const newTask = {...todoData[idElement], label: value, editing: false};
-      console.log(newTask);
       const newArr = [...todoData.slice(0, idElement), newTask, ...todoData.slice(idElement+1)];
-      console.log(newArr);
       return {todoData: newArr};
     })
   }
 
-
   render() {
 
-    /*
-    const todoData = [
-      { label: 'Completed Tack', completed: true, editing: false, createdData: null },
-      { label: 'Editing Tack', completed: false, editing: true, createdData: null },
-      { label: 'Active Tack', completed: false, editing: false, createdData: null },
-    ];
-  */
     const todoNeed = this.state.todoData
       .filter((el) => !el.completed)
       .length;
+
     return (
       <div className="App">
         <Header addNewTask={this.addNewTask} />
