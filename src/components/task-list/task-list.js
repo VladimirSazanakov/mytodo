@@ -7,15 +7,15 @@ import InputEdit from '../input-edit/'
 
 export default class TaskList extends Component {
 
-  
+
   render() {
     const { todo, filter, onCompleted, onDeleteTask, onEditBtn, onEditSubmit } = this.props;
 
     const elements = todo.map((task) => {
-      
+
       const liClassName = task.completed ? 'completed' : task.editing ? 'editing' : '';
-      const inputEdit = task.editing ? <InputEdit label={task.label} id={task.id} onEditSubmit={onEditSubmit}/> : null;
-      
+      const inputEdit = task.editing ? <InputEdit label={task.label} id={task.id} onEditSubmit={onEditSubmit} /> : null;
+
       const valid = (filter === 'All') ||
         (filter === 'Active' && !task.completed) ||
         (filter === 'Completed' && task.completed);
@@ -32,9 +32,9 @@ export default class TaskList extends Component {
             {inputEdit}
           </li>
         )
-      } else{
+      } else {
         return null;
-      } 
+      }
 
     });
 
@@ -46,3 +46,12 @@ export default class TaskList extends Component {
   };
 };
 
+TaskList.defaultProps = {
+  todo: [],
+  filter: 'All',
+  onCompleted: () => { },
+  onDeleteTask: () => { },
+  onEditBtn: () => { },
+  onEditSubmit: () => { },
+
+}

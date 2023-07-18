@@ -1,20 +1,20 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { formatDistanceToNow } from 'date-fns';
 import './task.css';
 
 export default class Task extends Component {
 
   render() {
-    
-    const { label, createdDate, completed, onDeleteTask, onEditBtn} = this.props;
-    const timeString = formatDistanceToNow((createdDate), {includeSeconds: true});
-    
-      return (
+
+    const { label, createdDate, completed, onDeleteTask, onEditBtn, onChecked } = this.props;
+    const timeString = formatDistanceToNow((createdDate), { includeSeconds: true });
+
+    return (
       <div className="view">
-        <input className="toggle" 
-                type="checkbox"  
-                onChange={this.props.onChecked}
-                checked={completed ? 'checked' : null} />
+        <input className="toggle"
+          type="checkbox"
+          onChange={onChecked}
+          checked={completed ? 'checked' : null} />
         <label>
           <span className="description">{label}</span>
           <span className="created">created {timeString} ago</span>
@@ -25,3 +25,12 @@ export default class Task extends Component {
     );
   };
 };
+
+Task.defaultProps = {
+  label: '',
+  createdDate: new Date(),
+  completed: false,
+  onDeleteTask: () => { },
+  onEditBtn: () => {},
+  onChecked: () => {},
+}

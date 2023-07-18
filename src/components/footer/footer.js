@@ -5,18 +5,20 @@ import TasksFilter from "../tasks-filter";
 
 export default class Footer extends Component {
 
-  render(){
-    
-    const {onChangeFilter, filter} = this.props;
+  render() {
+
+    const { onChangeFilter, filter } = this.props;
 
     return (
       <footer className="footer">
         <span className="todo-count">{this.props.todoNeed} items left</span>
         <TasksFilter onChangeFilter={onChangeFilter}
-                      filter={filter} />
+          filter={filter} />
         <button className="clear-completed"
-                onClick={this.props.clearCompleted}>Clear completed</button>
+          onClick={this.props.clearCompleted}>Clear completed</button>
       </footer>
     );
   };
 };
+
+Footer.defaultProps = {onChangeFilter : ()=>{}, filter: 'All'};

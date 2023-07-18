@@ -14,10 +14,11 @@ export default class InputEdit extends Component {
   };
 
   onChangeEditing = (event) => {
-    this.setState({label: event.target.value})
+    this.setState({ label: event.target.value })
   }
 
- render (){
+  render() {
+
     return (
       <form onSubmit={this.onSubmitEdit}>
         <input type="text"
@@ -27,7 +28,9 @@ export default class InputEdit extends Component {
           onChange={this.onChangeEditing}
         >
         </input>
-      </form> 
+      </form>
     )
   }
 }
+
+InputEdit.defaultProps = {id: 0, label: ''};
