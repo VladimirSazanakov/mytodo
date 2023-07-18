@@ -1,9 +1,19 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import './footer.css';
 
 import TasksFilter from "../tasks-filter";
 
 export default class Footer extends Component {
+
+  static defaultProps = {
+    onChangeFilter: () => { }, filter: 'All'
+  };
+
+  static propTypes = {
+    onChangeFilter: PropTypes.func,
+    filter: PropTypes.oneOf(['All', 'Active', 'Completed'])
+  };
 
   render() {
 
@@ -21,4 +31,3 @@ export default class Footer extends Component {
   };
 };
 
-Footer.defaultProps = {onChangeFilter : ()=>{}, filter: 'All'};

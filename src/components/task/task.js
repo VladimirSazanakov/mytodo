@@ -1,8 +1,27 @@
 import React, { Component } from "react";
 import { formatDistanceToNow } from 'date-fns';
+import PropTypes from 'prop-types';
 import './task.css';
 
 export default class Task extends Component {
+
+  static defaultProps = {
+    label: '',
+    createdDate: new Date(),
+    completed: false,
+    onDeleteTask: () => { },
+    onEditBtn: () => {},
+    onChecked: () => {},
+  };
+
+  static propTypes = {
+    label: PropTypes.string,
+    createdDate: PropTypes.instanceOf(Date),
+    completed: PropTypes.bool,
+    onDeleteTask: PropTypes.func,
+    onEditBtn: PropTypes.func,
+    onChecked: PropTypes.func,
+  };
 
   render() {
 
@@ -26,11 +45,3 @@ export default class Task extends Component {
   };
 };
 
-Task.defaultProps = {
-  label: '',
-  createdDate: new Date(),
-  completed: false,
-  onDeleteTask: () => { },
-  onEditBtn: () => {},
-  onChecked: () => {},
-}

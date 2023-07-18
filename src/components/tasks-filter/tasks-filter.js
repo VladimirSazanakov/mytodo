@@ -1,7 +1,16 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import './tasks-filter.css';
 
 export default class TaskFilter extends Component {
+
+  static defaultProps = {
+    onChangeFilter: () => { },
+  };
+
+  static propTypes = {
+    onChangeFilter: PropTypes.func,
+  }
 
   onClick = (event) => {
     const { onChangeFilter } = this.props;
@@ -30,6 +39,4 @@ export default class TaskFilter extends Component {
     );
   };
 }
-TaskFilter.defaultProps = {
-  onChangeFilter: () => { },
-}
+

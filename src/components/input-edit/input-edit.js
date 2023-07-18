@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './input-edit.css';
 
 export default class InputEdit extends Component {
+
+  static defaultProps = {
+    id: 0, 
+    label: '',
+  };
+
+  static propTypes = {
+    id: PropTypes.number,
+    label: PropTypes.string,
+  }
 
   state = {
     id: this.props.id,
@@ -33,4 +44,3 @@ export default class InputEdit extends Component {
   }
 }
 
-InputEdit.defaultProps = {id: 0, label: ''};

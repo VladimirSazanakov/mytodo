@@ -55,7 +55,6 @@ export default class App extends Component {
   }
 
   onClearCompleted = () => {
-    console.log('Need clear ol completed');
     this.setState(({ todoData }) => {
       const newArr = todoData.filter(el => !el.completed);
       return { todoData: newArr }
@@ -71,18 +70,18 @@ export default class App extends Component {
   onEditBtn = (id) => {
     this.setState(({ todoData }) => {
       const idElement = todoData.findIndex(el => el.id === id);
-      const newTask = {...todoData[idElement], editing: true};
-      const newArr = [...todoData.slice(0, idElement), newTask, ...todoData.slice(idElement+1)];
-      return {todoData: newArr};
+      const newTask = { ...todoData[idElement], editing: true };
+      const newArr = [...todoData.slice(0, idElement), newTask, ...todoData.slice(idElement + 1)];
+      return { todoData: newArr };
     })
   }
 
   onEditSubmit = (id, value) => {
-    this.setState(({todoData})=>{
-      const idElement= todoData.findIndex(el=>el.id === id);
-      const newTask = {...todoData[idElement], label: value, editing: false};
-      const newArr = [...todoData.slice(0, idElement), newTask, ...todoData.slice(idElement+1)];
-      return {todoData: newArr};
+    this.setState(({ todoData }) => {
+      const idElement = todoData.findIndex(el => el.id === id);
+      const newTask = { ...todoData[idElement], label: value, editing: false };
+      const newArr = [...todoData.slice(0, idElement), newTask, ...todoData.slice(idElement + 1)];
+      return { todoData: newArr };
     })
   }
 

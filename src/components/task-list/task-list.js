@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 
 import './task-list.css';
 
@@ -6,6 +7,24 @@ import Task from '../task/';
 import InputEdit from '../input-edit/'
 
 export default class TaskList extends Component {
+
+  static defaultProps = {
+    todo: [],
+    filter: 'All',
+    onCompleted: () => { },
+    onDeleteTask: () => { },
+    onEditBtn: () => { },
+    onEditSubmit: () => { },
+  };
+
+  static propTypes = {
+    todo: PropTypes.array,
+    filter: PropTypes.oneOf(['All', 'Active', 'Completed']),
+    onCompleted: PropTypes.func,
+    onDeleteTask: PropTypes.func,
+    onEditBtn: PropTypes.func,
+    onEditSubmit: PropTypes.func,
+  }
 
 
   render() {
@@ -46,12 +65,4 @@ export default class TaskList extends Component {
   };
 };
 
-TaskList.defaultProps = {
-  todo: [],
-  filter: 'All',
-  onCompleted: () => { },
-  onDeleteTask: () => { },
-  onEditBtn: () => { },
-  onEditSubmit: () => { },
 
-}
