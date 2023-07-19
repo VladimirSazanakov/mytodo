@@ -12,22 +12,24 @@ export default class Footer extends Component {
 
   static propTypes = {
     onChangeFilter: PropTypes.func,
-    filter: PropTypes.oneOf(['All', 'Active', 'Completed'])
+    filter: PropTypes.oneOf(['All', 'Active', 'Completed']),
+    todoNeed: PropTypes.func,
+    clearCompleted: PropTypes.func
   };
 
   render() {
 
-    const { onChangeFilter, filter } = this.props;
+    const { onChangeFilter, filter, todoNeed, clearCompleted } = this.props;
 
     return (
       <footer className="footer">
-        <span className="todo-count">{this.props.todoNeed} items left</span>
+        <span className="todo-count">{todoNeed} items left</span>
         <TasksFilter onChangeFilter={onChangeFilter}
           filter={filter} />
         <button className="clear-completed"
-          onClick={this.props.clearCompleted}>Clear completed</button>
+          onClick={clearCompleted}>Clear completed</button>
       </footer>
     );
-  };
-};
+  }
+}
 

@@ -42,6 +42,6 @@ export default class Task extends Component {
         <button className="icon icon-destroy" onClick={onDeleteTask}></button>
       </div>
     );
-  };
-};
+  }
+}
 

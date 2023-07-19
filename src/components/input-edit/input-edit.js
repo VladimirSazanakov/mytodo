@@ -5,13 +5,14 @@ import './input-edit.css';
 export default class InputEdit extends Component {
 
   static defaultProps = {
-    id: 0, 
+    id: 0,
     label: '',
   };
 
   static propTypes = {
     id: PropTypes.number,
     label: PropTypes.string,
+    onEditSubmit: PropTypes.func
   }
 
   state = {

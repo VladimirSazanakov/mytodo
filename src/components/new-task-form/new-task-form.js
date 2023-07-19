@@ -5,14 +5,14 @@ import './new-task-form.css';
 export default class NewTaskForm extends Component {
 
   static defaultProps = {
-    addNewTask: ()=>{},
+    addNewTask: () => { },
   };
 
-  static ptopTypes = {
-    addNewTask: PropTypes.func,
-  }
+  static propTypes = {
+    addNewTask: PropTypes.func
+  };
 
-  
+
   state = {
     label: '',
   }
@@ -24,21 +24,22 @@ export default class NewTaskForm extends Component {
   }
 
   onSubmit = (event) => {
+    const { addNewTask } = this.props;
     event.preventDefault();
-    this.props.addNewTask(this.state.label);
+    addNewTask(this.state.label);
     this.setState({ label: '' });
   }
 
   render() {
     return (
       <form onSubmit={this.onSubmit}>
-        <input className="new-todo" 
-                placeholder="What needs to be done?" 
-                autoFocus 
-                value={this.state.label} 
-                onChange={this.onChangeInput} />
+        <input className="new-todo"
+          placeholder="What needs to be done?"
+          autoFocus
+          value={this.state.label}
+          onChange={this.onChangeInput} />
       </form>
     );
-  };
-};
+  }
+}
 

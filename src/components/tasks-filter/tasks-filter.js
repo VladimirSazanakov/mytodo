@@ -6,10 +6,13 @@ export default class TaskFilter extends Component {
 
   static defaultProps = {
     onChangeFilter: () => { },
+    filter: 'All'
+
   };
 
   static propTypes = {
     onChangeFilter: PropTypes.func,
+    filter: PropTypes.string
   }
 
   onClick = (event) => {
@@ -37,6 +40,6 @@ export default class TaskFilter extends Component {
         </li>
       </ul>
     );
-  };
+  }
 }
 
