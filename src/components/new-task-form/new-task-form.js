@@ -4,7 +4,7 @@ import './new-task-form.css';
 
 export default class NewTaskForm extends Component {
   static defaultProps = {
-    addNewTask: () => { },
+    addNewTask: () => {},
   };
 
   static propTypes = {
@@ -40,5 +40,5 @@ export default class NewTaskForm extends Component {
         />
       </form>
     );
-  };
-};
+  }
+}
