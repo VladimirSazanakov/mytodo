@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import './input-edit.css';
 
 export default class InputEdit extends Component {
-
   static defaultProps = {
     id: 0,
     label: '',
@@ -12,36 +11,34 @@ export default class InputEdit extends Component {
   static propTypes = {
     id: PropTypes.number,
     label: PropTypes.string,
-    onEditSubmit: PropTypes.func
-  }
+    onEditSubmit: PropTypes.func,
+  };
 
   state = {
     id: this.props.id,
     label: this.props.label,
-  }
+  };
 
   onSubmitEdit = (event) => {
     event.preventDefault();
-    this.props.onEditSubmit(this.state.id, this.state.label)
+    this.props.onEditSubmit(this.state.id, this.state.label);
   };
 
   onChangeEditing = (event) => {
-    this.setState({ label: event.target.value })
-  }
+    this.setState({ label: event.target.value });
+  };
 
   render() {
-
     return (
       <form onSubmit={this.onSubmitEdit}>
-        <input type="text"
+        <input
+          type="text"
           name="editInput"
           className="edit"
           value={this.state.label}
           onChange={this.onChangeEditing}
-        >
-        </input>
+        ></input>
       </form>
-    )
+    );
   }
 }
-

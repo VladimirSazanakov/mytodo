@@ -1,24 +1,22 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import NewTaskForm from '../new-task-form';
 import PropTypes from 'prop-types';
 import './header.css';
 
 export default class Header extends Component {
-
   static defaultProps = {
-    addNewTask: ()=>{},
+    addNewTask: () => {},
   };
 
   static propTypes = {
     addNewTask: PropTypes.func,
-  }
+  };
 
-  render (){
+  render() {
     return (
       <header className="header">
         <h1>todos</h1>
-        <NewTaskForm addNewTask={this.props.addNewTask}/>
-      
+        <NewTaskForm addNewTask={this.props.addNewTask} />
       </header>
     );
   }
