@@ -13,7 +13,7 @@ export default class Footer extends Component {
   static propTypes = {
     onChangeFilter: PropTypes.func,
     filter: PropTypes.oneOf(['All', 'Active', 'Completed']),
-    todoNeed: PropTypes.func,
+    todoNeed: PropTypes.number,
     clearCompleted: PropTypes.func,
   };
 
