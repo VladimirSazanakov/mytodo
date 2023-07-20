@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import NewTaskForm from '../new-task-form';
 import PropTypes from 'prop-types';
+
+import NewTaskForm from '../new-task-form';
 import './header.css';
 
 export default class Header extends Component {

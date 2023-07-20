@@ -11,14 +11,21 @@
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended",
-        "plugin:prettier/recommended"
+        "plugin:prettier/recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings"
     ],
     "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "prettier",
+        "import"
     ],
     "rules": {
         "indent": [
@@ -47,6 +54,26 @@
                     ".js",
                     ".jsx"
                 ]
+            }
+        ],
+        "import/no-unresolved": [
+            2,
+            {
+                "caseSensitive": false
+            }
+        ],
+        "import/order": [
+            2,
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    "parent",
+                    "sibling",
+                    "index"
+                ],
+                "newlines-between": "always"
             }
         ]
     },
