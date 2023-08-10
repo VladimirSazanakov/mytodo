@@ -12,7 +12,9 @@ export default class App extends Component {
   count = 10;
 
   /*test timer*/
-  timerCancel = () => {
+  timerPause = (id) => {
+    const idElement = todoData.findIndex((el) => el.id === id);
+    todoData[idElement].timer.pause();
     console.log("timer is OUT");
   }
 
@@ -25,11 +27,12 @@ export default class App extends Component {
     let timer = new timerService(1, 10, this.timerCancel, () => this.timerDispaly(timer));
 
     //timer.setDisplayFunction(() => this.timerDispaly(timer));
+  }
 
-
-
-    timer.start();
-
+  timerStart(id) {
+    const idElement = todoData.findIndex((el) => el.id === id);
+    todoData[idElement].timer.start();
+    console.log('timer start');
   }
 
   /*end test timer*/
@@ -42,7 +45,7 @@ export default class App extends Component {
   createNewTask = ({ label, min, sec }) => {
     this.count += 1;
     const currentDate = new Date();
-    return {
+    const newTask = {
       label,
       completed: false,
       editing: false,
@@ -50,14 +53,18 @@ export default class App extends Component {
       id: this.count,
       timer: new timerService(min, sec, this.timerCancel, this.timerDispaly),
     };
+    console.log(newTask);
+    return newTask;
   };
 
   addNewTask = (taskProps) => {
+    console.log('Add new task');
     this.setState(({ todoData }) => {
       const newTask = this.createNewTask(taskProps);
       const newArr = [...todoData, newTask];
       return { todoData: newArr };
     });
+    console.log(this.state);
   };
 
   onCompleted = (id) => {
@@ -112,7 +119,7 @@ export default class App extends Component {
   render() {
     const todoNeed = this.state.todoData.filter((el) => !el.completed).length;
 
-    this.creatStartTimer();
+    //this.creatStartTimer();
 
     return (
       <div className="App">
@@ -125,6 +132,8 @@ export default class App extends Component {
             filter={this.state.filter}
             onEditBtn={this.onEditBtn}
             onEditSubmit={this.onEditSubmit}
+            onTimerStart={this.timerStart}
+            onTimerPause={this.timerPause}
           />
           <Footer
             todoNeed={todoNeed}
