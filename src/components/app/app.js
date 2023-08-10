@@ -11,28 +11,18 @@ import timerService from '../service/timer-service';
 export default class App extends Component {
   count = 10;
 
-  /*test timer*/
+  /*timer*/
+
   timerPause = (id) => {
-    const idElement = todoData.findIndex((el) => el.id === id);
-    todoData[idElement].timer.pause();
-    console.log("timer is OUT");
+    const timer = this.getTimer(id);
+    timer.pause();
+    console.log("timer Pause from App");
   }
 
-  timerDispaly = (timer) => {
-    const { minute, seconds } = timer.getTime();
-    console.log('timer is: ', minute, 'min ', seconds, ' sec');
-  }
-
-  creatStartTimer() {
-    let timer = new timerService(1, 10, this.timerCancel, () => this.timerDispaly(timer));
-
-    //timer.setDisplayFunction(() => this.timerDispaly(timer));
-  }
-
-  timerStart(id) {
-    const idElement = todoData.findIndex((el) => el.id === id);
-    todoData[idElement].timer.start();
-    console.log('timer start');
+  getTimer = (id) => {
+    const idElement = this.state.todoData.findIndex((el) => el.id === id);
+    const Element = this.state.todoData[idElement];
+    return Element.timer;
   }
 
   /*end test timer*/
@@ -41,6 +31,7 @@ export default class App extends Component {
     todoData: [],
     filter: 'All',
   };
+
 
   createNewTask = ({ label, min, sec }) => {
     this.count += 1;
@@ -51,9 +42,8 @@ export default class App extends Component {
       editing: false,
       createdDate: currentDate,
       id: this.count,
-      timer: new timerService(min, sec, this.timerCancel, this.timerDispaly),
+      timer: new timerService(min, sec),
     };
-    console.log(newTask);
     return newTask;
   };
 
@@ -64,10 +54,10 @@ export default class App extends Component {
       const newArr = [...todoData, newTask];
       return { todoData: newArr };
     });
-    console.log(this.state);
   };
 
   onCompleted = (id) => {
+    this.timerPause(id);
     this.setState(({ todoData }) => {
       const idElement = todoData.findIndex((el) => el.id === id);
       const oldTask = todoData[idElement];
@@ -78,6 +68,7 @@ export default class App extends Component {
   };
 
   onDeleteTask = (id) => {
+    this.timerPause(id);
     this.setState(({ todoData }) => {
       const idElement = todoData.findIndex((el) => el.id === id);
       const newArr = [...todoData.slice(0, idElement), ...todoData.slice(idElement + 1)];
@@ -86,10 +77,10 @@ export default class App extends Component {
   };
 
   onClearCompleted = () => {
-    this.setState(({ todoData }) => {
-      const newArr = todoData.filter((el) => !el.completed);
-      return { todoData: newArr };
+    this.state.todoData.filter((el) => el.completed).map((el) => {
+      this.onDeleteTask(el.id);
     });
+
   };
 
   onChangeFilter = (filterValue) => {
@@ -134,6 +125,7 @@ export default class App extends Component {
             onEditSubmit={this.onEditSubmit}
             onTimerStart={this.timerStart}
             onTimerPause={this.timerPause}
+            getTimer={this.getTimer}
           />
           <Footer
             todoNeed={todoNeed}

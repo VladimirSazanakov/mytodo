@@ -24,7 +24,7 @@ export default class Task extends Component {
   };
 
   render() {
-    const { label, createdDate, completed, onDeleteTask, onEditBtn, onChecked } = this.props;
+    const { label, createdDate, completed, onDeleteTask, onEditBtn, onChecked, onTimerStart, onTimerPause, timer } = this.props;
     const timeString = formatDistanceToNow(createdDate, { includeSeconds: true });
 
     return (
@@ -33,7 +33,11 @@ export default class Task extends Component {
         <label>
           <span className='title'>{label}</span>
           <span className="description">
-            <Timer onTimerStart={this.props.onTimerStart} onTimerPause={this.props.onTimerPause} />
+            <Timer
+              onTimerStart={onTimerStart}
+              onTimerPause={onTimerPause}
+              timer={timer}
+            />
           </span>
           {/* <span className="created">created {timeString} ago</span> */}
           <span className="description">created {timeString} ago</span>

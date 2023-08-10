@@ -26,7 +26,7 @@ export default class TaskList extends Component {
   };
 
   render() {
-    const { todo, filter, onCompleted, onDeleteTask, onEditBtn, onEditSubmit, onTimerStart, onTimerPause } = this.props;
+    const { todo, filter, onCompleted, onDeleteTask, onEditBtn, onEditSubmit, onTimerStart, onTimerPause, getTimer } = this.props;
 
     const elements = todo.map((task) => {
       const liClassName = task.completed ? 'completed' : task.editing ? 'editing' : '';
@@ -47,6 +47,7 @@ export default class TaskList extends Component {
               onEditBtn={() => onEditBtn(task.id)}
               onTimerStart={() => onTimerStart(task.id)}
               onTimerPause={() => onTimerPause(task.id)}
+              timer={getTimer(task.id)}
             />
             {inputEdit}
           </li>

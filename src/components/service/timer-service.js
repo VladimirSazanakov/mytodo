@@ -1,15 +1,15 @@
 export default class timerService {
-  constructor(min = 0, sec = 0, expiredTime, displayTimer) {
+  constructor(min = 0, sec = 0) {
     this.min = min;
     this.sec = sec;
     this.interval;
-    this.expiredTime = expiredTime;
-    this.displayTimer = displayTimer;
+    this.expiredTime = () => { };
+    this.displayTimer = () => { };
   }
   substructSec = () => {
 
-    if (this.sec === 0) {
-      if (this.min === 0) {
+    if (this.sec <= 0) {
+      if (this.min <= 0) {
         clearInterval(this.interval);
         // this.expiredTime();
       } else {
@@ -26,18 +26,26 @@ export default class timerService {
     //   // this.expiredTime();
     // }
 
-    // console.log(this.min, ":", this.sec);
+    console.log(this.min, ":", this.sec);
+
     this.displayTimer();
   }
 
   start = () => {
     //console.log(this.expiredTime);
     //console.log(this.displayTimer);
-    this.interval = setInterval(this.substructSec, 1000);
+    console.log("timer start");
+    console.log(this.interval);
+    if (!this.interval) {
+      this.interval = setInterval(this.substructSec, 1000);
+    }
   }
 
   pause = () => {
+    console.log('timer pause');
     clearInterval(this.interval);
+    this.interval = undefined;
+    console.log(this.interval);
   }
 
   getTime = () => {
@@ -45,6 +53,10 @@ export default class timerService {
       'minute': this.min,
       'seconds': this.sec
     }
+  }
+
+  setTimerDisplay = (timerDisplayFunc) => {
+    this.displayTimer = timerDisplayFunc;
   }
 
 }
