@@ -110,8 +110,6 @@ export default class App extends Component {
   render() {
     const todoNeed = this.state.todoData.filter((el) => !el.completed).length;
 
-    //this.creatStartTimer();
-
     return (
       <div className="App">
         <Header addNewTask={this.addNewTask} />
@@ -123,8 +121,6 @@ export default class App extends Component {
             filter={this.state.filter}
             onEditBtn={this.onEditBtn}
             onEditSubmit={this.onEditSubmit}
-            onTimerStart={this.timerStart}
-            onTimerPause={this.timerPause}
             getTimer={this.getTimer}
           />
           <Footer

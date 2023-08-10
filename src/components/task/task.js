@@ -9,6 +9,7 @@ export default class Task extends Component {
     label: '',
     createdDate: new Date(),
     completed: false,
+    timer: null,
     onDeleteTask: () => { },
     onEditBtn: () => { },
     onChecked: () => { },
@@ -18,13 +19,14 @@ export default class Task extends Component {
     label: PropTypes.string,
     createdDate: PropTypes.instanceOf(Date),
     completed: PropTypes.bool,
+    timer: PropTypes.instanceOf(setInterval),
     onDeleteTask: PropTypes.func,
     onEditBtn: PropTypes.func,
     onChecked: PropTypes.func,
   };
 
   render() {
-    const { label, createdDate, completed, onDeleteTask, onEditBtn, onChecked, onTimerStart, onTimerPause, timer } = this.props;
+    const { label, createdDate, completed, onDeleteTask, onEditBtn, onChecked, timer } = this.props;
     const timeString = formatDistanceToNow(createdDate, { includeSeconds: true });
 
     return (
@@ -34,12 +36,9 @@ export default class Task extends Component {
           <span className='title'>{label}</span>
           <span className="description">
             <Timer
-              onTimerStart={onTimerStart}
-              onTimerPause={onTimerPause}
               timer={timer}
             />
           </span>
-          {/* <span className="created">created {timeString} ago</span> */}
           <span className="description">created {timeString} ago</span>
         </label>
         <button className="icon icon-edit" onClick={onEditBtn}></button>

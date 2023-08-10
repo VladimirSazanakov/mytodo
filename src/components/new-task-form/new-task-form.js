@@ -24,15 +24,16 @@ export default class NewTaskForm extends Component {
   };
 
   onChangeMin = (event) => {
+    const min = parseInt(event.target.value);
     this.setState({
-      min: event.target.value,
+      min: min,
     });
   };
 
   onChangeSec = (event) => {
     const sec = Number(event.target.value);
     if (!isNaN(sec)) {
-      if (sec > 60) {
+      if (sec >= 60) {
         this.setState({
           sec: 59,
         });
@@ -52,10 +53,14 @@ export default class NewTaskForm extends Component {
     const { addNewTask } = this.props;
     event.preventDefault();
 
-    console.log('Submit Button');
-    console.log('State: ', this.state);
+    // console.log('Submit Button');
+    // console.log('State: ', this.state);
+    let { label, min, sec } = this.state;
 
-    addNewTask(this.state);
+    if (min === '') min = 0;
+    if (sec === '') sec = 0;
+
+    addNewTask({ label: label, min: min, sec: sec });
 
     this.setState({ label: '', min: '', sec: '' });
 
@@ -69,6 +74,7 @@ export default class NewTaskForm extends Component {
             className="new-todo"
             placeholder="Task"
             autoFocus
+            required
             value={this.state.label}
             onChange={this.onChangeInput}
           />
@@ -76,6 +82,8 @@ export default class NewTaskForm extends Component {
             className="new-todo-form__timer"
             placeholder="min"
             value={this.state.min}
+            maxLength={3}
+            pattern='^\d+$'
             onChange={this.onChangeMin}
             onSubmit={this.onSubmit}
           />
@@ -84,7 +92,8 @@ export default class NewTaskForm extends Component {
             placeholder="sec"
             value={this.state.sec}
             onChange={this.onChangeSec}
-            pattern='[0-59]'
+            maxLength={2}
+            pattern='^\d+$'
             onSubmit={this.onSubmit}
           />
           <input type='submit' style={{ position: 'absolute', visibility: "hidden" }}></input>

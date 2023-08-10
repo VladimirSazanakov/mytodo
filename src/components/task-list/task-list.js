@@ -14,6 +14,7 @@ export default class TaskList extends Component {
     onDeleteTask: () => { },
     onEditBtn: () => { },
     onEditSubmit: () => { },
+    getTimer: () => { },
   };
 
   static propTypes = {
@@ -26,7 +27,7 @@ export default class TaskList extends Component {
   };
 
   render() {
-    const { todo, filter, onCompleted, onDeleteTask, onEditBtn, onEditSubmit, onTimerStart, onTimerPause, getTimer } = this.props;
+    const { todo, filter, onCompleted, onDeleteTask, onEditBtn, onEditSubmit, getTimer } = this.props;
 
     const elements = todo.map((task) => {
       const liClassName = task.completed ? 'completed' : task.editing ? 'editing' : '';

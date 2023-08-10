@@ -1,12 +1,29 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import './timer.css';
 
 export default class Timer extends Component {
+  static defaultProps = {
+    timer: null,
+  };
 
-  state = this.props.timer.getTime();
+  static propTypes = {
+    timer: PropTypes.instanceOf(setInterval),
+  };
+
+  state = {
+    minute: 0,
+    seconds: 0,
+  }
 
   timer = this.props.timer;
 
+  componentDidMount() {
+    if (this.props.timer) {
+      this.setState(this.props.timer.getTime());
+      this.timer.setTimerDisplay(this.updateTime);
+    }
+  }
 
   updateTime = () => {
     const { minute, seconds } = this.timer.getTime();
@@ -26,13 +43,6 @@ export default class Timer extends Component {
   }
 
   render() {
-    // const { getTimer } = this.props;
-    //console.log(this.props);
-    // const timer = getTimer();
-    // console.log(this.timer);
-    // this.updateTime(timer);
-
-    this.timer.setTimerDisplay(this.updateTime);
 
 
     return (
