@@ -4,7 +4,7 @@ import './new-task-form.css';
 
 export default class NewTaskForm extends Component {
   static defaultProps = {
-    addNewTask: () => {},
+    addNewTask: () => { },
   };
 
   static propTypes = {
@@ -13,6 +13,8 @@ export default class NewTaskForm extends Component {
 
   state = {
     label: '',
+    min: 0,
+    sec: 0,
   };
 
   onChangeInput = (event) => {
@@ -21,11 +23,24 @@ export default class NewTaskForm extends Component {
     });
   };
 
+  onChangeMin = (event) => {
+    this.setState({
+      min: event.target.value,
+    });
+  };
+
+  onChangeSec = (event) => {
+    this.setState({
+      sec: event.target.value,
+    });
+  };
+
   onSubmit = (event) => {
     const { addNewTask } = this.props;
     event.preventDefault();
-    addNewTask(this.state.label);
-    this.setState({ label: '' });
+    addNewTask(this.state);
+    this.setState({ label: '', min: 0, sec: 0 });
+
   };
 
   render() {
@@ -37,6 +52,18 @@ export default class NewTaskForm extends Component {
           autoFocus
           value={this.state.label}
           onChange={this.onChangeInput}
+        />
+        <input
+          className="new-todo-form-timer"
+          placeholder="min"
+          value={this.state.min}
+          onChange={this.onChangeMin}
+        />
+        <input
+          className="new-todo-form-timer"
+          placeholder="sec"
+          value={this.state.sec}
+          onChange={this.onChangeSec}
         />
       </form>
     );

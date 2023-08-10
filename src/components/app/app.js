@@ -6,16 +6,40 @@ import './app.css';
 import Header from '../header/';
 import TaskList from '../task-list';
 import Footer from '../footer/';
+import timerService from '../service/timer-service';
 
 export default class App extends Component {
   count = 10;
+
+  /*test timer*/
+  timerCancel = () => {
+    console.log("timer is OUT");
+  }
+
+  timerDispaly = (timer) => {
+    const { minute, seconds } = timer.getTime();
+    console.log('timer is: ', minute, 'min ', seconds, ' sec');
+  }
+
+  creatStartTimer() {
+    let timer = new timerService(1, 10, this.timerCancel, () => this.timerDispaly(timer));
+
+    //timer.setDisplayFunction(() => this.timerDispaly(timer));
+
+
+
+    timer.start();
+
+  }
+
+  /*end test timer*/
 
   state = {
     todoData: [],
     filter: 'All',
   };
 
-  createNewTask = (label) => {
+  createNewTask = ({ label, min, sec }) => {
     this.count += 1;
     const currentDate = new Date();
     return {
@@ -24,12 +48,13 @@ export default class App extends Component {
       editing: false,
       createdDate: currentDate,
       id: this.count,
+      timer: new timerService(min, sec, this.timerCancel, this.timerDispaly),
     };
   };
 
-  addNewTask = (label) => {
+  addNewTask = (taskProps) => {
     this.setState(({ todoData }) => {
-      const newTask = this.createNewTask(label);
+      const newTask = this.createNewTask(taskProps);
       const newArr = [...todoData, newTask];
       return { todoData: newArr };
     });
@@ -86,6 +111,8 @@ export default class App extends Component {
 
   render() {
     const todoNeed = this.state.todoData.filter((el) => !el.completed).length;
+
+    this.creatStartTimer();
 
     return (
       <div className="App">
