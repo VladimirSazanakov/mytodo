@@ -10,11 +10,11 @@ export default class TaskList extends Component {
   static defaultProps = {
     todo: [],
     filter: 'All',
-    onCompleted: () => { },
-    onDeleteTask: () => { },
-    onEditBtn: () => { },
-    onEditSubmit: () => { },
-    getTimer: () => { },
+    onCompleted: () => {},
+    onDeleteTask: () => {},
+    onEditBtn: () => {},
+    onEditSubmit: () => {},
+    getTimer: () => {},
   };
 
   static propTypes = {
@@ -46,8 +46,6 @@ export default class TaskList extends Component {
               onChecked={() => onCompleted(task.id)}
               onDeleteTask={() => onDeleteTask(task.id)}
               onEditBtn={() => onEditBtn(task.id)}
-              onTimerStart={() => onTimerStart(task.id)}
-              onTimerPause={() => onTimerPause(task.id)}
               timer={getTimer(task.id)}
             />
             {inputEdit}

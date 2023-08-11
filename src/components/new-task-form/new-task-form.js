@@ -4,7 +4,7 @@ import './new-task-form.css';
 
 export default class NewTaskForm extends Component {
   static defaultProps = {
-    addNewTask: () => { },
+    addNewTask: () => {},
   };
 
   static propTypes = {
@@ -25,9 +25,13 @@ export default class NewTaskForm extends Component {
 
   onChangeMin = (event) => {
     const min = parseInt(event.target.value);
-    this.setState({
-      min: min,
-    });
+    if (isNaN(min)) {
+      this.setState({ min: 0 });
+    } else {
+      this.setState({
+        min: min,
+      });
+    }
   };
 
   onChangeSec = (event) => {
@@ -63,7 +67,6 @@ export default class NewTaskForm extends Component {
     addNewTask({ label: label, min: min, sec: sec });
 
     this.setState({ label: '', min: '', sec: '' });
-
   };
 
   render() {
@@ -83,7 +86,7 @@ export default class NewTaskForm extends Component {
             placeholder="min"
             value={this.state.min}
             maxLength={3}
-            pattern='^\d+$'
+            pattern="^\d+$"
             onChange={this.onChangeMin}
             onSubmit={this.onSubmit}
           />
@@ -93,10 +96,10 @@ export default class NewTaskForm extends Component {
             value={this.state.sec}
             onChange={this.onChangeSec}
             maxLength={2}
-            pattern='^\d+$'
+            pattern="^\d+$"
             onSubmit={this.onSubmit}
           />
-          <input type='submit' style={{ position: 'absolute', visibility: "hidden" }}></input>
+          <input type="submit" style={{ position: 'absolute', visibility: 'hidden' }}></input>
         </form>
       </dir>
     );

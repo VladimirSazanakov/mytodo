@@ -16,14 +16,14 @@ export default class App extends Component {
   timerPause = (id) => {
     const timer = this.getTimer(id);
     timer.pause();
-    console.log("timer Pause from App");
-  }
+    console.log('timer Pause from App');
+  };
 
   getTimer = (id) => {
     const idElement = this.state.todoData.findIndex((el) => el.id === id);
     const Element = this.state.todoData[idElement];
     return Element.timer;
-  }
+  };
 
   /*end test timer*/
 
@@ -31,7 +31,6 @@ export default class App extends Component {
     todoData: [],
     filter: 'All',
   };
-
 
   createNewTask = ({ label, min, sec }) => {
     this.count += 1;
@@ -77,10 +76,11 @@ export default class App extends Component {
   };
 
   onClearCompleted = () => {
-    this.state.todoData.filter((el) => el.completed).map((el) => {
-      this.onDeleteTask(el.id);
-    });
-
+    this.state.todoData
+      .filter((el) => el.completed)
+      .map((el) => {
+        this.onDeleteTask(el.id);
+      });
   };
 
   onChangeFilter = (filterValue) => {

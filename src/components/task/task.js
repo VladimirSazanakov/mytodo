@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types';
+
 import './task.css';
 import Timer from '../timer/timer';
 
@@ -10,9 +11,9 @@ export default class Task extends Component {
     createdDate: new Date(),
     completed: false,
     timer: null,
-    onDeleteTask: () => { },
-    onEditBtn: () => { },
-    onChecked: () => { },
+    onDeleteTask: () => {},
+    onEditBtn: () => {},
+    onChecked: () => {},
   };
 
   static propTypes = {
@@ -33,11 +34,9 @@ export default class Task extends Component {
       <div className="view">
         <input className="toggle" type="checkbox" onChange={onChecked} checked={completed ? 'checked' : null} />
         <label>
-          <span className='title'>{label}</span>
+          <span className="title">{label}</span>
           <span className="description">
-            <Timer
-              timer={timer}
-            />
+            <Timer timer={timer} />
           </span>
           <span className="description">created {timeString} ago</span>
         </label>
