@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-//import ReactDom from 'react-dom';
+import React, { useState } from 'react';
 
 import './app.css';
 
@@ -8,129 +7,120 @@ import TaskList from '../task-list';
 import Footer from '../footer/';
 import timerService from '../service/timer-service';
 
-export default class App extends Component {
-  count = 10;
+export default function App() {
+  const [todoData, setTodoData] = useState([]);
+  const [filter, setFilter] = useState('All');
+  const [count, setCount] = useState(10);
 
-  /*timer*/
+  //timer
 
-  timerPause = (id) => {
-    const timer = this.getTimer(id);
+  const timerPause = (id) => {
+    const timer = getTimer(id);
     timer.pause();
-    console.log('timer Pause from App');
   };
 
-  getTimer = (id) => {
-    const idElement = this.state.todoData.findIndex((el) => el.id === id);
-    const Element = this.state.todoData[idElement];
+  const getTimer = (id) => {
+    const idElement = todoData.findIndex((el) => el.id === id);
+    const Element = todoData[idElement];
     return Element.timer;
   };
 
-  /*end test timer*/
+  //end test timer
 
-  state = {
-    todoData: [],
-    filter: 'All',
-  };
-
-  createNewTask = ({ label, min, sec }) => {
-    this.count += 1;
+  const createNewTask = ({ label, min, sec }) => {
+    setCount((count) => {
+      return count + 1;
+    });
     const currentDate = new Date();
     const newTask = {
       label,
       completed: false,
       editing: false,
       createdDate: currentDate,
-      id: this.count,
+      id: count,
       timer: new timerService(min, sec),
     };
     return newTask;
   };
 
-  addNewTask = (taskProps) => {
+  const addNewTask = (taskProps) => {
     console.log('Add new task');
-    this.setState(({ todoData }) => {
-      const newTask = this.createNewTask(taskProps);
+    setTodoData((todoData) => {
+      const newTask = createNewTask(taskProps);
       const newArr = [...todoData, newTask];
-      return { todoData: newArr };
+      return newArr;
     });
   };
 
-  onCompleted = (id) => {
-    this.timerPause(id);
-    this.setState(({ todoData }) => {
+  const onCompleted = (id) => {
+    timerPause(id);
+    setTodoData((todoData) => {
       const idElement = todoData.findIndex((el) => el.id === id);
       const oldTask = todoData[idElement];
       const NewTask = { ...oldTask, completed: !oldTask['completed'] };
       const NewArr = [...todoData.slice(0, idElement), NewTask, ...todoData.slice(idElement + 1)];
-      return { todoData: NewArr };
+      return NewArr;
     });
   };
 
-  onDeleteTask = (id) => {
-    this.timerPause(id);
-    this.setState(({ todoData }) => {
+  const onDeleteTask = (id) => {
+    timerPause(id);
+    setTodoData((todoData) => {
       const idElement = todoData.findIndex((el) => el.id === id);
       const newArr = [...todoData.slice(0, idElement), ...todoData.slice(idElement + 1)];
-      return { todoData: newArr };
+      return newArr;
     });
   };
 
-  onClearCompleted = () => {
-    this.state.todoData
+  const onClearCompleted = () => {
+    todoData
       .filter((el) => el.completed)
       .map((el) => {
-        this.onDeleteTask(el.id);
+        onDeleteTask(el.id);
       });
   };
 
-  onChangeFilter = (filterValue) => {
-    this.setState(() => {
-      return { filter: filterValue };
+  const onChangeFilter = (filterValue) => {
+    setFilter(() => {
+      return filterValue;
     });
   };
 
-  onEditBtn = (id) => {
-    this.setState(({ todoData }) => {
+  const onEditBtn = (id) => {
+    setTodoData((todoData) => {
       const idElement = todoData.findIndex((el) => el.id === id);
       const newTask = { ...todoData[idElement], editing: true };
       const newArr = [...todoData.slice(0, idElement), newTask, ...todoData.slice(idElement + 1)];
-      return { todoData: newArr };
+      return newArr;
     });
   };
 
-  onEditSubmit = (id, value) => {
-    this.setState(({ todoData }) => {
+  const onEditSubmit = (id, value) => {
+    setTodoData((todoData) => {
       const idElement = todoData.findIndex((el) => el.id === id);
       const newTask = { ...todoData[idElement], label: value, editing: false };
       const newArr = [...todoData.slice(0, idElement), newTask, ...todoData.slice(idElement + 1)];
-      return { todoData: newArr };
+      return newArr;
     });
   };
 
-  render() {
-    const todoNeed = this.state.todoData.filter((el) => !el.completed).length;
+  const todoNeed = todoData.filter((el) => !el.completed).length;
 
-    return (
-      <div className="App">
-        <Header addNewTask={this.addNewTask} />
-        <section className="main">
-          <TaskList
-            todo={this.state.todoData}
-            onCompleted={this.onCompleted}
-            onDeleteTask={this.onDeleteTask}
-            filter={this.state.filter}
-            onEditBtn={this.onEditBtn}
-            onEditSubmit={this.onEditSubmit}
-            getTimer={this.getTimer}
-          />
-          <Footer
-            todoNeed={todoNeed}
-            clearCompleted={this.onClearCompleted}
-            onChangeFilter={this.onChangeFilter}
-            filter={this.state.filter}
-          />
-        </section>
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      <Header addNewTask={addNewTask} />
+      <section className="main">
+        <TaskList
+          todo={todoData}
+          onCompleted={onCompleted}
+          onDeleteTask={onDeleteTask}
+          filter={filter}
+          onEditBtn={onEditBtn}
+          onEditSubmit={onEditSubmit}
+          getTimer={getTimer}
+        />
+        <Footer todoNeed={todoNeed} clearCompleted={onClearCompleted} onChangeFilter={onChangeFilter} filter={filter} />
+      </section>
+    </div>
+  );
 }

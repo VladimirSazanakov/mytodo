@@ -1,52 +1,42 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import './timer.css';
 
-export default class Timer extends Component {
-  static defaultProps = {
-    timer: null,
-  };
+export default function Timer(props) {
+  const timer = props.timer;
 
-  static propTypes = {
-    timer: PropTypes.instanceOf(setInterval),
-  };
+  const [minute, setMinute] = useState(0);
+  const [seconds, setSeconds] = useState(0);
 
-  state = {
-    minute: 0,
-    seconds: 0,
-  };
-
-  timer = this.props.timer;
-
-  componentDidMount() {
-    if (this.props.timer) {
-      this.setState(this.props.timer.getTime());
-      this.timer.setTimerDisplay(this.updateTime);
+  useEffect(() => {
+    if (timer) {
+      const { minute, seconds } = timer.getTime();
+      setMinute(minute);
+      setSeconds(seconds);
+      timer.setTimerDisplay(() => updateTime());
     }
-  }
+  }, []);
 
-  updateTime = () => {
-    const { minute, seconds } = this.timer.getTime();
-    this.setState({ minute: minute, seconds: seconds });
+  const updateTime = () => {
+    const { minute, seconds } = timer.getTime();
+    setMinute(minute);
+    setSeconds(seconds);
   };
 
-  onClickStart = () => {
-    this.timer.start();
+  const onClickStart = () => {
+    timer.start();
   };
 
-  onClickPause = () => {
-    this.timer.pause();
+  const onClickPause = () => {
+    timer.pause();
   };
 
-  render() {
-    return (
-      <span className="description">
-        <button className="icon icon-play" onClick={this.onClickStart}></button>
-        <button className="icon icon-pause" onClick={this.onClickPause}></button>
-        <span className="timer-value">
-          {this.state.minute}:{this.state.seconds}
-        </span>
+  return (
+    <span className="description">
+      <button className="icon icon-play" onClick={onClickStart}></button>
+      <button className="icon icon-pause" onClick={onClickPause}></button>
+      <span className="timer-value">
+        {minute}:{seconds}
       </span>
-    );
-  }
+    </span>
+  );
 }

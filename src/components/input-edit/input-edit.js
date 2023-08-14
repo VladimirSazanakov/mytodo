@@ -1,44 +1,22 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import './input-edit.css';
 
-export default class InputEdit extends Component {
-  static defaultProps = {
-    id: 0,
-    label: '',
-  };
+export default function InputEdit(props) {
+  const id = props.id;
+  const [label, setLabel] = useState(props.label);
 
-  static propTypes = {
-    id: PropTypes.number,
-    label: PropTypes.string,
-    onEditSubmit: PropTypes.func,
-  };
-
-  state = {
-    id: this.props.id,
-    label: this.props.label,
-  };
-
-  onSubmitEdit = (event) => {
+  const onSubmitEdit = (event) => {
     event.preventDefault();
-    this.props.onEditSubmit(this.state.id, this.state.label);
+    props.onEditSubmit(id, label);
   };
 
-  onChangeEditing = (event) => {
-    this.setState({ label: event.target.value });
+  const onChangeEditing = (event) => {
+    setLabel(event.target.value);
   };
 
-  render() {
-    return (
-      <form onSubmit={this.onSubmitEdit}>
-        <input
-          type="text"
-          name="editInput"
-          className="edit"
-          value={this.state.label}
-          onChange={this.onChangeEditing}
-        ></input>
-      </form>
-    );
-  }
+  return (
+    <form onSubmit={onSubmitEdit}>
+      <input type="text" name="editInput" className="edit" value={label} onChange={onChangeEditing}></input>
+    </form>
+  );
 }
